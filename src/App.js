@@ -12,7 +12,10 @@ import { SearchCity } from "./components/searchCity";
 function App() {
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
-
+  const [error, setError] = useState({
+    isError: false,
+    message: "",
+  });
   useEffect(() => {
     getGeolocation();
   }, []);
@@ -26,25 +29,40 @@ function App() {
 
   const searchCity = async (event) => {
     event.preventDefault();
+    if (event.target.city.value) {
+      try {
+        const whaterCity = await getWeatherByCity(event.target.city.value);
+        const forecastCity = await getForecastByCity(event.target.city.value);
 
-    try {
-      const whaterCity = await getWeatherByCity(event.target.city.value);
-      const forecastCity = await getForecastByCity(event.target.city.value);
-
-      if (
-        whaterCity.hasOwnProperty("name") &&
-        forecastCity.hasOwnProperty("city")
-      ) {
-        setCurrentWeather(whaterCity);
-        setForecast(forecastCity);
-      }
-    } catch (error) {}
+        if (
+          whaterCity.hasOwnProperty("name") &&
+          forecastCity.hasOwnProperty("city")
+        ) {
+          setCurrentWeather(whaterCity);
+          setForecast(forecastCity);
+        }
+      } catch (error) {}
+    } else {
+      setError({
+        isError: true,
+        message: "Ingrese una Ciudad",
+      });
+    }
   };
-
+  const onChangeError = () => {
+    setError({
+      isError: false,
+      message: "",
+    });
+  };
   return (
     <div className="App">
       <div className="content_currentWeather">
-        <SearchCity handleSubmit={searchCity} />
+        <SearchCity
+          handleSubmit={searchCity}
+          error={error}
+          onChangeError={onChangeError}
+        />
         <CurrentWeather {...currentWeather} />
       </div>
       <hr className="separator" />
