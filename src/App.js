@@ -1,23 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useEffect, useState } from "react";
+import {
+  getForecastByLonAndLat,
+  getWeatherByLonAndLat,
+  getWeatherByCity,
+  getForecastByCity,
+} from "./services/services";
+import "./App.css";
+import { CurrentWeather } from "./components/currentWeather";
+import { ListForecast } from "./components/listForecast";
+import { SearchCity } from "./components/searchCity";
 function App() {
+  const [currentWeather, setCurrentWeather] = useState(null);
+  const [forecast, setForecast] = useState(null);
+
+  useEffect(() => {
+    getGeolocation();
+  }, []);
+
+  const getGeolocation = () => {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      setCurrentWeather(await getWeatherByLonAndLat(position.coords));
+      setForecast(await getForecastByLonAndLat(position.coords));
+    });
+  };
+
+  const searchCity = async (event) => {
+    event.preventDefault();
+
+    try {
+      const whaterCity = await getWeatherByCity(event.target.city.value);
+      const forecastCity = await getForecastByCity(event.target.city.value);
+
+      if (
+        whaterCity.hasOwnProperty("name") &&
+        forecastCity.hasOwnProperty("city")
+      ) {
+        setCurrentWeather(whaterCity);
+        setForecast(forecastCity);
+      }
+    } catch (error) {}
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="content_currentWeather">
+        <SearchCity handleSubmit={searchCity} />
+        <CurrentWeather {...currentWeather} />
+      </div>
+      <hr className="separator" />
+      <ListForecast forecast={forecast} />
     </div>
   );
 }

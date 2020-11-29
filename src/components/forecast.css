@@ -1,0 +1,17 @@
+.img_forecast {
+  width: 30px;
+  height: 30px;
+}
+.hours_forecast {
+  color: white;
+  margin-right: 10px;
+}
+.day_forecast {
+  color: #ebebeb;
+}
+.contet_list_forecast {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}

@@ -1,0 +1,59 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+.title_listForecast {
+  color: white;
+}
+.now_day {
+  grid-column: 1;
+  border-right: 1px solid white;
+}
+.first_day {
+  grid-column: 2;
+  border-right: 1px solid white;
+}
+
+.second_day {
+  grid-column: 3;
+  border-right: 1px solid white;
+}
+
+.third_day {
+  grid-column: 4;
+  border-right: 1px solid white;
+}
+
+.fourth_day {
+  grid-column: 5;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .now_day {
+    border-top: 1px solid white;
+    border-right: none;
+  }
+  .first_day {
+    border-top: 1px solid white;
+    border-right: none;
+  }
+
+  .second_day {
+    border-top: 1px solid white;
+    border-right: none;
+  }
+
+  .third_day {
+    border-top: 1px solid white;
+    border-right: none;
+  }
+
+  .fourth_day {
+    border-top: 1px solid white;
+  }
+}

@@ -28,6 +28,17 @@
   color: #61dafb;
 }
 
+.content_currentWeather {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.separator {
+  width: 90% !important;
+  border: 1px solid white;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
