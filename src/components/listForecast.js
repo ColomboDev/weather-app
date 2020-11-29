@@ -1,5 +1,5 @@
 import React from "react";
-import { filterDate, dayNowSimple, dayHours } from ".././helpers/date";
+import { filterDate, dayNowSimple } from ".././helpers/date";
 import { Forecast } from "./forecast";
 import "./listForecast.css";
 export const ListForecast = (props) => {
