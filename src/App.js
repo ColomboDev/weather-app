@@ -40,11 +40,6 @@ function App() {
         ) {
           setCurrentWeather(whaterCity);
           setForecast(forecastCity);
-        } else {
-          setError({
-            isError: true,
-            message: "Ciudad no encontrada",
-          });
         }
       } catch (error) {}
     } else {
